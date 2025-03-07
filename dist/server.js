@@ -14,33 +14,17 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const databaseService_1 = require("./services/databaseService");
-const logger_1 = __importDefault(require("./util/logger"));
 const PORT = 3300;
 const SERVER_URL = 'https://ded6827.inmotionhosting.com';
 const server = app_1.default.listen(PORT);
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const connection = yield (0, databaseService_1.connectToDatabase)();
-        logger_1.default.info('DATABASE_CONNECTION', {
-            meta: {
-                CONNECTION_NAME: connection.config.database
-            }
-        });
-        logger_1.default.info('APPLICATION_STARTED', {
-            meta: {
-                PORT,
-                SERVER_URL
-            }
-        });
+        yield (0, databaseService_1.connectToDatabase)();
+        console.log(`Server is running at ${SERVER_URL} on port ${PORT}`);
     }
     catch (err) {
-        logger_1.default.error('APPLICATION_ERROR', { meta: err });
-        server.close((error) => {
-            if (error) {
-                logger_1.default.error('APPLICATION_ERROR', { meta: error });
-            }
-            process.exit(1);
-        });
+        console.error('Error starting application:', err);
+        server.close(() => process.exit(1));
     }
 }))();
 //# sourceMappingURL=server.js.map
