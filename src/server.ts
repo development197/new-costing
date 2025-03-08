@@ -71,15 +71,19 @@ import app from './app'
 import { connectToDatabase } from './services/databaseService'
 
 const PORT = 3300
-const SERVER_URL = 'https://ded6827.inmotionhosting.com'
+// const SERVER_URL = 'https://ded6827.inmotionhosting.com'
 
-const server = app.listen(PORT)
+// const server = app.listen(PORT)
+
+const server = app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`)
+})
 
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 ;(async () => {
     try {
         await connectToDatabase()
-        console.log(`Server is running at ${SERVER_URL} on port ${PORT}`)
+        console.log(`Server is running on port ${PORT}`)
     } catch (err) {
         console.error('Error starting application:', err)
         server.close(() => process.exit(1))

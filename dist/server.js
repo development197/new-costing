@@ -15,12 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const app_1 = __importDefault(require("./app"));
 const databaseService_1 = require("./services/databaseService");
 const PORT = 3300;
-const SERVER_URL = 'https://ded6827.inmotionhosting.com';
-const server = app_1.default.listen(PORT);
+const server = app_1.default.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, databaseService_1.connectToDatabase)();
-        console.log(`Server is running at ${SERVER_URL} on port ${PORT}`);
+        console.log(`Server is running on port ${PORT}`);
     }
     catch (err) {
         console.error('Error starting application:', err);
